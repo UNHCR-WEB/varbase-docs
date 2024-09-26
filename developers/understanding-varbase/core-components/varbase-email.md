@@ -22,7 +22,19 @@ project_directory
 
 Brings in the following core and contributed modules to your site:
 
-| Module                                                             | Purpose                                 |
-| ------------------------------------------------------------------ | --------------------------------------- |
-| ****[**Swift Mailer**](https://drupal.org/project/swiftmailer)**** | Installs Swift Mailer as a mail system. |
+| Module                                                                       | Purpose                                 |
+| ---------------------------------------------------------------------------- | --------------------------------------- |
+| ****[**Symfony Mailer**](https://www.drupal.org/project/symfony\_mailer)**** | Integrate Symfony Mailer into Drupal.   |
+| ****[**Swift Mailer**](https://drupal.org/project/swiftmailer)****           | Installs Swift Mailer as a mail system. |
 
+{% content-ref url="../../configuring-a-varbase-site/configuring-varbase-mailer-settings/switch-configs-from-swift-mailer-to-symfony-mailer.md" %}
+[switch-configs-from-swift-mailer-to-symfony-mailer.md](../../configuring-a-varbase-site/configuring-varbase-mailer-settings/switch-configs-from-swift-mailer-to-symfony-mailer.md)
+{% endcontent-ref %}
+
+{% content-ref url="../../configuring-a-varbase-site/configuring-varbase-mailer-settings/configure-symfony-mailer.md" %}
+[configure-symfony-mailer.md](../../configuring-a-varbase-site/configuring-varbase-mailer-settings/configure-symfony-mailer.md)
+{% endcontent-ref %}
+
+{% content-ref url="../../configuring-a-varbase-site/configuring-varbase-mailer-settings/configure-swift-mailer.md" %}
+[configure-swift-mailer.md](../../configuring-a-varbase-site/configuring-varbase-mailer-settings/configure-swift-mailer.md)
+{% endcontent-ref %}

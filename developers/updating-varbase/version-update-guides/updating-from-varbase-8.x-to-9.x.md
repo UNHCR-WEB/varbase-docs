@@ -50,7 +50,9 @@ Be sure to switch the `composer.json` file to work with **Composer \~2**
 [updating-varbase-to-work-with-composer-2.0.md](../updating-varbase-to-work-with-composer-2.0.md)
 {% endcontent-ref %}
 
-Remove the not needed `"drupal/drupal-library-installer-plugin": "^0.3",`  from the `composer.json` file.
+### Remove the not Needed Drupal Library Installer Plugin
+
+Remove  `"drupal/drupal-library-installer-plugin": "^0.3",`  from the `composer.json` file.
 
 ### Varbase 8.8.8 and Newer
 
@@ -60,10 +62,10 @@ Make sure that **Composer** version **\~2** is in use in the development environ
 sudo composer self-update --2
 ```
 
-## 2. Add Drush \~10
+## 2. Add Drush
 
 ```
-composer require drush/drush:~10
+composer require "drush/drush:~10.0 || ~11.0"
 ```
 
 ## 3. Uninstall All Removed Components
@@ -206,7 +208,7 @@ Check that all used modules in the project are **Drupal 9 Compatible!**
 
 
 
-* [x] First change the default admin them to [**Vartheme Claro**](https://www.drupal.org/project/vartheme\_claro)****
+* [x] First change the default admin them to [**Vartheme Claro**](https://www.drupal.org/project/vartheme\_claro)
 
 &#x20;            drush theme:enable vartheme\_claro
 
@@ -218,7 +220,7 @@ Check that all used modules in the project are **Drupal 9 Compatible!**
 
 &#x20;           drush theme:uninstall adminimal\_theme
 
-****
+
 
 **Keeping** **Admininimal**? Add the following to the composer.json file In case of choosing to keep the **Adminimal - Responsive Administration Theme**  as the default back-end theme.
 
@@ -248,7 +250,7 @@ Check the **Drupal 9 Compatibility** for all used module.
 Search for the **"**[**Drupal 9**](https://www.drupal.org/about/9) **is here!"** notice in the Drupal project page for each required module in the root `composer.json` file for the project. Look for **"Requires Drupal:"** In the project page for the module in Drupal.org.
 {% endhint %}
 
-**Example Module:** [**Webform Mautic**](https://www.drupal.org/project/webform\_mautic)****
+**Example Module:** [**Webform Mautic**](https://www.drupal.org/project/webform\_mautic)
 
 Projects may or may not use this module. If it was required and used, check the following in the project page.
 
@@ -304,8 +306,18 @@ Make sure to have the following in the _**composer.json**_ file.
   "config": {
     "bin-dir": "bin/",
     "secure-http": false,
+    "optimize-autoloader": true,
     "preferred-install": {
       "drupal/core": "dist"
+    },
+    "allow-plugins": {
+      "composer/installers": true,
+      "cweagans/composer-patches": true,
+      "oomphinc/composer-installers-extender": true,
+      "drupal/core-composer-scaffold": true,
+      "drupal/core-project-message": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "vardot/varbase-updater": true
     }
   },
   
@@ -324,7 +336,7 @@ The root `composer.json` file should look like the Varbase 9.0.x project templat
 
 &#x20; <mark style="background-color:orange;">**It should look like the composer.json file .. not the same exact copy of it**</mark> &#x20;
 
-[https://github.com/Vardot/varbase-project/blob/9.0.3/composer.json](https://github.com/Vardot/varbase-project/blob/9.0.3/composer.json)
+[https://github.com/Vardot/varbase-project/blob/9.0.10/composer.json](https://github.com/Vardot/varbase-project/blob/9.0.10/composer.json)
 
 keep the work of the automated updater. Do not do any manual copy and replacing for the outcome composer.json file. Only edit the the same file.
 {% endhint %}
@@ -353,7 +365,7 @@ Remember to remove Drush from the composer before deploying to the live site.
 {% endhint %}
 
 ```
-composer remove drush/drush:~10
+composer remove drush/drush
 ```
 
 ## 10. Set Composer Exit on Patch Failure to True
@@ -386,8 +398,16 @@ Please change it back to
     "composer-exit-on-patch-failure": true,
 ```
 
-It was sat true in the [**Vardot/varbase-project/composer.json**](https://github.com/Vardot/varbase-project/blob/9.0.2/composer.json) for the following rezone.
+It was sat true in the [**Vardot/varbase-project/composer.json**](https://github.com/Vardot/varbase-project/blob/9.0.6/composer.json) for the following rezone.
 
 {% hint style="danger" %}
-A module could have a **security patch** or a **functional feature patch.** If the patch did not apply. That means the project has a **security issue,** or some expected **behaviors will be lost** or a bug will show up in projects.
+A module could have a **security patch** or a **functional feature patch.** If the patch did not apply. That means the project has a **security issue,** some expected **behaviors will be lost** or a bug will show up in the project.
 {% endhint %}
+
+
+
+## If **Varbase Layout Builder \~8.0** or **\~9.0** were not Enabled in Old Sites
+
+* Only remove it from the **root composer.json** file for the project and do a `composer update`
+* The **Varbase Layout Builder \~10.0** and all needed modules will be required in the default **Varbase \~9.0** profile
+* Enable **Varbase Layout Builder** and **Varbase Landing (Layout Builder)** modules.

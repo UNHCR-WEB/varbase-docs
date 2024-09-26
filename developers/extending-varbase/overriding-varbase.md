@@ -23,7 +23,7 @@ In case of capturing a bug. Search if it was filed in an issue.  Look if the a p
 {% hint style="info" %}
 Apply the patch using the **Composer patching method** using:
 
-&#x20;**** [**cweagans/composer-patches**](https://github.com/cweagans/composer-patches)****
+&#x20;[**cweagans/composer-patches**](https://github.com/cweagans/composer-patches)
 
 Do not use the manual patching method in projects.
 
@@ -95,12 +95,12 @@ There may be situations in which you want to ignore a patch supplied by a depend
 
 **Example:**&#x20;
 
-The [**Varbase Core**](https://www.drupal.org/project/varbase\_core) **** module **** is requiring **Drupal Core** with **** `"drupal/core": "~9.0",` **** . Having number of patches to fix issues or overriding Drupal core.
+The [**Varbase Core**](https://www.drupal.org/project/varbase\_core) module is requiring **Drupal Core** with `"drupal/core": "~9.0",` . Having number of patches to fix issues or overriding Drupal core.
 
 {% hint style="info" %}
 **Varbase Core**'s `composer.json` file for the 9.0.7 version
 
-****[**https://github.com/Vardot/varbase\_core/blob/9.0.7/composer.json#L138**](https://github.com/Vardot/varbase\_core/blob/9.0.7/composer.json#L138)****
+[**https://github.com/Vardot/varbase\_core/blob/9.0.7/composer.json#L138**](https://github.com/Vardot/varbase\_core/blob/9.0.7/composer.json#L138)
 {% endhint %}
 
 Let imagine that the **Drupal core release** **team** had a new release, But they had committed the following issue:
@@ -166,6 +166,63 @@ Ignore the patch being used as in the following example method:
   }
 }
 ```
+
+## Recommended Patching Method with Gitlab Issue Forks
+
+> If you use the URL to the Gitlab MR directly, your code base will change without warning, as people work on the merge request.
+
+[https://www.drupal.org/docs/develop/git/using-git-to-contribute-to-drupal/creating-issue-forks-and-merge-requests#s-patch-files-f\[…\]se-with-composer](https://www.drupal.org/docs/develop/git/using-git-to-contribute-to-drupal/creating-issue-forks-and-merge-requests#s-patch-files-for-use-with-composer) \
+
+
+{% hint style="success" %}
+**Recommended to use the local patch method in this case.**
+{% endhint %}
+
+* Download the `.diff` or `.patch` file in a `patches` folder in the project.
+* Add the module name, issue number, and date for the MR changes to the name of the file.
+* Add the patch local patch to patches.
+
+**Example** ( **NOT** Recommended ): &#x20;
+
+```
+    "patches": {
+      "drupal/gin_login": {
+        "Issue #3342318: Fix Gin Login Wallpaper images with the Origin URL (scheme and HTTP host) of the site":
+        "https://git.drupalcode.org/project/gin_login/-/merge_requests/19.diff"
+      }
+    }
+```
+
+**Example** ( Recommended remote patch file ): &#x20;
+
+```
+    "patches": {
+      "drupal/gin_login": {
+        "Issue #3342318: Fix Gin Login Wallpaper images with the Origin URL (scheme and HTTP host) of the site":
+        "https://www.drupal.org/files/issues/2023-02-16/3342318-3.patch"
+      }
+    }
+
+```
+
+**Example** ( Recommended local patch/diff file ): &#x20;
+
+```
+    "patches": {
+      "drupal/gin_login": {
+        "Issue #3342318: Fix Gin Login Wallpaper images with the Origin URL (scheme and HTTP host) of the site":
+        "patches/gin_login-2023-02-16--3342318-19.diff"
+      }
+    }
+```
+
+{% hint style="warning" %}
+**WARNING:** The URL for a Merge Request patch file will be named after the MR and will not change as more and more commits are being added to the MR. **The contents of the patch file will change**, however.
+
+This effectively means that you will get the latest version of the code from an issue, but you can't lock the patch file to a previous state, ignoring newer commits, until [this issue ](https://www.drupal.org/project/drupalorg/issues/3204538)is fixed. So, it brings a **security risk** because any new commit to the issue's branch will be automatically deployed to your repo via the next "composer install" launch and can harm your project!
+
+Therefore, it's **strongly recommended to lock the patch file versions on production sites**. To do so you **must** download the patch file and use it in composer from a local directory, or upload it to the same issue as a file. If you use the URL to the Gitlab MR directly, your codebase will change without warning, as people work on the merge request.
+{% endhint %}
 
 {% hint style="danger" %}
 Do not keep **patches** or **patches-ignore** for long in projects.
